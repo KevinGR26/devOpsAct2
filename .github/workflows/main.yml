@@ -1,0 +1,13 @@
+name: Crear Cliente
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify_team:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notificar equipo
+        run: echo "Nuevo cliente creado. Equipo ha sido notificado."
