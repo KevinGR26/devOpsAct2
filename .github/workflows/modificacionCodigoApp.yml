@@ -1,0 +1,21 @@
+name: Notificación de Modificación de Código
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  notify-code-modification:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Comentar en la solicitud de modificación
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.payload.pull_request.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: "🚀 Se ha creado o modificado un pull request. Por favor, revisen los cambios propuestos en el código. ¡Gracias, equipo!"
+          })
