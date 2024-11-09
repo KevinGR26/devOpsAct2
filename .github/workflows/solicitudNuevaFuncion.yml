@@ -1,0 +1,22 @@
+name: Notificación de Nueva Solicitud de Función
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  notify-new-feature:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Verificar si la solicitud es una función nueva
+      if: contains(github.event.issue.labels.*.name, 'feature request')
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.payload.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: "📢 Nueva solicitud de función detectada. El equipo ha sido notificado sobre la nueva característica solicitada: [${{ github.event.issue.title }}]. Por favor, revisen y den su opinión. ¡Gracias!"
+          })
